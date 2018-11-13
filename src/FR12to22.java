@@ -149,6 +149,24 @@ public class FR12to22{
 		
 	}
 	
+	
+	//FR16 settings page and functionality
+	
+	
+	//FR17 TV operator settings page and functionality
+	
+	
+	//FR18 Logout
+	
+	
+	//FR19 Change personal information in settings menu
+	
+	
+	//20-21 Delete account functionality
+	
+	
+	//FR22 
+	
 }
 
 
