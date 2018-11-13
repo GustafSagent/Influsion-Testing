@@ -1,6 +1,9 @@
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -17,11 +20,12 @@ public class FR12to22{
 
 	//Run this code to setup the right test environment 
 	@Before
-	public void setUpTestEnviornment() {
+	public void setUpTestEnviornment() throws InterruptedException {
 		// Change webdriver file path to your own manually
 		System.setProperty("webdriver.chrome.driver", "C:/Users/Herma/Desktop/SeleniumDriver/chromedriver.exe");
 		browser= new ChromeDriver();
-		browser.get("http://localhost:8080/");   
+		browser.get("http://localhost:8080/");  
+		Thread.sleep(500);
 	}
 	
 	@After
@@ -33,11 +37,11 @@ public class FR12to22{
 	
 	//FR12 retrieve lost password via email
 	
+	/*
 	//FR13 following functionality
 	@Test
 	public void FR13() throws InterruptedException {
 		
-		Thread.sleep(500);
 		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
 		
 		//check if follow or not, if not then follow
@@ -74,13 +78,42 @@ public class FR12to22{
 		assertTrue(names.contains(nameKey));
 	}
 	
+	*/
+	
+	//FR14 check order of posts
 	@Test
-	public void FR14() throws InterruptedException {
-		
+	public void FR14() throws InterruptedException, ParseException {
+	
+		//go to follow page'
+		browser.get("http://localhost:8080/feed");
 		Thread.sleep(500);
-	
-	
+		
+		List<WebElement> FeedComponent = browser.findElements(By.className("feed-component-wrapper"));
+		ArrayList<Date> timestamps = new ArrayList<Date>();
+		boolean correctOrder = true;
+		
+		for (WebElement comp : FeedComponent) {
+			String time = comp.findElement(By.tagName("time")).getAttribute("datetime");	
+			String times[] = time.split("T");
+			String newtime = times[0] + " " + times [1];
+			Date datetime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(newtime);
+			timestamps.add(datetime);	
+		}
+		
+		for (Date date : timestamps) {
+			int indx = timestamps.indexOf(date);
+			if (indx < timestamps.size()-1) {
+				if (!date.after(timestamps.get(indx+1))) {
+					correctOrder = false;
+				}	
+			}
+		}	
+		
+		assertEquals(correctOrder, true);
+
 	}
+
+	
 }
 
 
