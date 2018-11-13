@@ -10,11 +10,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class FRTesting{
+public class FR12to22{
 	
 	WebDriver browser;
 
-	//Run this code to setup the right test eniornmnet 
+	//Run this code to setup the right test environmnet 
 	@Before
 	public void setUpTestEnviornment() {
 		// Change webdriver filepath to your own manually (Easy solution now in the start up phase)

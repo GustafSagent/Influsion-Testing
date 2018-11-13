@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
-public class FunctionalRequirementsTesting2{
+public class FR1to11{
 	WebDriver browser;
 
 	//Run this code to setup the right test eniornmnet 
@@ -21,11 +21,6 @@ public class FunctionalRequirementsTesting2{
 		// /Users/Gustaf/Desktop/SeleniumDrivers/chromedriver
 		System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
 
-		//Gustafs Config
-		//System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
-		//Hermans config
-		//System.setProperty("webdriver.chrome.driver", "/Users/Herma/Desktop/chromedriver");
-	
 		browser= new ChromeDriver();
 		browser.get("http://localhost:8080/");   
 	}
