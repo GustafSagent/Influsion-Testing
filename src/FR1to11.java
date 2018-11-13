@@ -187,8 +187,37 @@ public class FR1to11{
 	// Functions tested in Test Case 6 are not implemented yet
 	// Functions tested in Test Case 7 are not implemented yet
 	
-
 	
+	@Test
+	public void FR8() throws InterruptedException {
+		browser.get("http://localhost:8080/register");
+		Thread.sleep(1000);
+		
+		int uniqueUserID = helpFunctions.randInt(100000, 999999);
+		
+		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys("TestUser" + uniqueUserID);
+		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys("TestPassword");
+		browser.findElement(By.cssSelector("[placeholder='Email']")).sendKeys("TestUser"  + uniqueUserID + "@Test.org");
+		browser.findElement(By.cssSelector("[placeholder='Age']")).sendKeys("25");
+		browser.findElement(By.cssSelector("[name='sex']")).sendKeys("Female");
+		
+		browser.findElement(By.xpath("//button[contains(text(),'Register')]")).click();
+		
+		
+		browser.get("http://localhost:8080/login");
+		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys("TestUser" + uniqueUserID);
+		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys("TestPassword");
+		Thread.sleep(10000);
+		browser.findElement(By.xpath("//button[contains(text(),'Lets go into the wilderness!')]")).click();
+		
+		Thread.sleep(1000);
+		List<WebElement> PopularFeed = browser.findElements(By.cssSelector(".popular-feed-content"));
+		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
+		assertEquals(PopularComponent.size(),100);  
+		assertEquals(PopularFeed.size(), 1);
+		
+		
+	}
 
 
 
