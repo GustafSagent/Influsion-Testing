@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
-public class FunctionalRequirementsTesting{
+public class FunctionalRequirementsTesting2{
 	WebDriver browser;
 
 	//Run this code to setup the right test eniornmnet 
@@ -20,6 +20,12 @@ public class FunctionalRequirementsTesting{
 		// Change webdriver filepath to your own manually (Easy solution now in the start up phase)
 		// /Users/Gustaf/Desktop/SeleniumDrivers/chromedriver
 		System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
+
+		//Gustafs Config
+		//System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
+		//Hermans config
+		//System.setProperty("webdriver.chrome.driver", "/Users/Herma/Desktop/chromedriver");
+	
 		browser= new ChromeDriver();
 		browser.get("http://localhost:8080/");   
 	}
@@ -28,8 +34,6 @@ public class FunctionalRequirementsTesting{
 	public void endTesting() {
 		browser.close();
 	}
-	
-	
 	
 
 	
@@ -62,6 +66,7 @@ public class FunctionalRequirementsTesting{
 //	assertEquals(PopularFeed.size(), 1);
 //	}
 //	
+
 	@Test
 	public void FR2() {
 		try {
