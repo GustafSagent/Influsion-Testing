@@ -19,12 +19,13 @@ public class FR1to11{
 
 	//Run this code to setup the right test eniornmnet 
 	@Before
-	public void setUpTestEnviornment() {
+	public void setUpTestEnviornment() throws InterruptedException {
 		// Change webdriver filepath to your own manually (Easy solution now in the start up phase)
 		// /Users/Gustaf/Desktop/SeleniumDrivers/chromedriver
 		System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
 		browser= new ChromeDriver();
-		browser.get("http://localhost:8080/");   
+		browser.get("http://localhost:8080/");  
+		Thread.sleep(1000);
 	}
 	
 	@After
@@ -39,7 +40,6 @@ public class FR1to11{
 	@Test
 	public void FR1() throws InterruptedException {
 		
-		Thread.sleep(200);
 		
 		List<WebElement> PopularFeed = browser.findElements(By.cssSelector(".popular-feed-content"));
 		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
@@ -51,17 +51,18 @@ public class FR1to11{
 	
 //Test Case 2 dived up into 3 test cases to get a better view. At the moment we do only check the first post and see if it works. 
 	@Test
-	public void FR2_1() throws InterruptedException {
-	
-			Thread.sleep(1000);
+	public void FR2_Youtube() throws InterruptedException {
+
 		
-		List<WebElement> YoutubeContent =browser.findElements(By.cssSelector("a[href*=youtube]"));
-		WebElement YoutubePost = YoutubeContent.get(0);
+		List<WebElement> YoutubeContent =browser.findElements(By.cssSelector("[data-icon='youtube']"));
+		YoutubeContent.remove(YoutubeContent.size()-1);
+		WebElement YoutubePost = YoutubeContent.get(helpFunctions.randInt(0, YoutubeContent.size()-1));
+		YoutubePost = YoutubePost.findElement(By.xpath(".."));
 		
 			String videolink = YoutubePost.getAttribute("href");
 			((JavascriptExecutor) browser).executeScript("arguments[0].scrollIntoView(true);", YoutubePost);
 			((JavascriptExecutor) browser).executeScript("window.scrollBy(0,-50)","");
-			Thread.sleep(200);
+			Thread.sleep(1000);
 			YoutubePost.click();
 			String url = browser.getCurrentUrl();
 			System.out.println(url);
@@ -70,13 +71,14 @@ public class FR1to11{
 		
 	
 	@Test
-	public void FR2_2() throws InterruptedException {
+	public void FR2_Twitter() throws InterruptedException {
 			
-		Thread.sleep(1000);
 		
+		List<WebElement> TwitterContent =browser.findElements(By.cssSelector("[data-icon='twitter']"));
+		TwitterContent.remove(TwitterContent.size()-1);
+		WebElement TwitterPost = TwitterContent.get(helpFunctions.randInt(0, TwitterContent.size()-1));
+		TwitterPost = TwitterPost.findElement(By.xpath(".."));	
 		
-		List<WebElement> TwitterContent =browser.findElements(By.cssSelector("a[href*=twitter]"));	
-		WebElement TwitterPost = TwitterContent.get(0);
 
 		String postlink = TwitterPost.getAttribute("href");
 		((JavascriptExecutor) browser).executeScript("arguments[0].scrollIntoView(true);", TwitterPost);
@@ -90,12 +92,15 @@ public class FR1to11{
 		
 		
 	@Test
-	public void FR2_3() throws InterruptedException {
-		
-		Thread.sleep(1000);
+	public void FR2_Instagram() throws InterruptedException {
 			
-		List<WebElement> InstaContent =browser.findElements(By.cssSelector("a[href*=instagram]"));
-		WebElement InstaPost = InstaContent.get(0);
+		List<WebElement> InstaContent =browser.findElements(By.cssSelector("[data-icon='instagram']"));
+		InstaContent.remove(InstaContent.size()-1);
+		WebElement InstaPost = InstaContent.get(helpFunctions.randInt(0, InstaContent.size()-1));
+		InstaPost = InstaPost.findElement(By.xpath(".."));	
+		
+		
+		
 		String Instalink = InstaPost.getAttribute("href");
 		((JavascriptExecutor) browser).executeScript("arguments[0].scrollIntoView(true);", InstaPost);
 		((JavascriptExecutor) browser).executeScript("window.scrollBy(0,-50)","");
@@ -107,6 +112,84 @@ public class FR1to11{
 			}
 		
 		
+	 //FR3 not implemented yet
+	
+	@Test
+	public void FR4_Twitter() throws InterruptedException {
+		List<WebElement> Button =browser.findElements(By.cssSelector("[data-icon='twitter']"));
+		Button.get(Button.size()-1).click();
+		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='twitter']"));
+		assertEquals(Content.size(),1);
+		
+	}
+	
+	@Test
+	public void FR4_Instagram() throws InterruptedException {
+		List<WebElement> Button =browser.findElements(By.cssSelector("[data-icon='instagram']"));
+		Button.get(Button.size()-1).click();
+		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='instagram']"));
+		assertEquals(Content.size(),1);
+		
+	}
+	
+	@Test
+	public void FR4_Youtube() throws InterruptedException {
+		List<WebElement> Button =browser.findElements(By.cssSelector("[data-icon='youtube']"));
+		Button.get(Button.size()-1).click();
+		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='youtube']"));
+		assertEquals(Content.size(),1);
+		
+	}
+	
+	
+	@Test
+	public void FR5_Twitter() throws InterruptedException {
+		List<WebElement> ListOfContent =browser.findElements(By.cssSelector("[data-icon='twitter']"));
+		int NrOfPostsPlusOne=ListOfContent.size();
+		ListOfContent.get(ListOfContent.size()-1).click();
+		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='twitter']"));
+		assertEquals(Content.size(),1);
+		ListOfContent.get(ListOfContent.size()-1).click();
+		Content =browser.findElements(By.cssSelector("[data-icon='twitter']"));
+		assertEquals(Content.size(),NrOfPostsPlusOne);
+		
+		
+	}
+	
+	@Test
+	public void FR5_Youtube() throws InterruptedException {
+		List<WebElement> ListOfContent =browser.findElements(By.cssSelector("[data-icon='youtube']"));
+		int NrOfPostsPlusOne=ListOfContent.size();
+		ListOfContent.get(ListOfContent.size()-1).click();
+		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='youtube']"));
+		assertEquals(Content.size(),1);
+		ListOfContent.get(ListOfContent.size()-1).click();
+		Content =browser.findElements(By.cssSelector("[data-icon='youtube']"));
+		assertEquals(Content.size(),NrOfPostsPlusOne);
+		
+		
+	}
+	
+	@Test
+	public void FR5_Instagram() throws InterruptedException {
+		List<WebElement> ListOfContent =browser.findElements(By.cssSelector("[data-icon='instagram']"));
+		int NrOfPostsPlusOne=ListOfContent.size();
+		ListOfContent.get(ListOfContent.size()-1).click();
+		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='instagram']"));
+		assertEquals(Content.size(),1);
+		ListOfContent.get(ListOfContent.size()-1).click();
+		Content =browser.findElements(By.cssSelector("[data-icon='instagram']"));
+		assertEquals(Content.size(),NrOfPostsPlusOne);
+		
+		
+	}
+	
+	// Functions tested in Test Case 6 are not implemented yet
+	// Functions tested in Test Case 7 are not implemented yet
+	
+
+	
+
 
 
 
