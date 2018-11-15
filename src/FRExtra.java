@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,6 +36,7 @@ public class FRExtra{
 	
 	// ------------------LETS GO--------------------------
 	
+	
 	//FR27 Twitter meta content
 		@Test
 		public void FR27() throws InterruptedException {
@@ -61,19 +63,20 @@ public class FRExtra{
 			String retweets = "";
 			String comments = "";
 			String hashtags = "";
-			
-			//where will the hashtags be shown?
-			
+						
 			for (WebElement data : metaDataTypes) {
 				if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("heart")) {
 					likes = data.getText();
 				} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("calendar-alt")) {
 					date = data.getText();
-				} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("retweet")) {
-					retweets = data.getText();
-				} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("comments")) {
-					comments = data.getText();
-				}
+				} //else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("retweet")) {
+					//retweets = data.getText();
+			//	} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("comments")) {
+					//comments = data.getText();
+			//	}
+				
+				//where will the hashtags be shown?
+						
 			}
 			
 			boolean correctMeta = true;
@@ -82,23 +85,26 @@ public class FRExtra{
 			if (!(Integer.parseInt(likes) >= 0)) {
 				correctMeta = false;
 			}
-			//comments
-			if (!(Integer.parseInt(comments) >= 0)) {
-				correctMeta = false;
-			}
-			//retweets
-			if (!(Integer.parseInt(retweets) >= 0)) {
-				correctMeta = false;
-			}
 			//date
-			if (!(date != null)) {
+			if (date == null || date.equals("")) {
 				correctMeta = false;
 			}
+			//comments
+		//	if (!(Integer.parseInt(comments) >= 0)) {
+		//		correctMeta = false;
+		//	}
+			//retweets
+		//	if (!(Integer.parseInt(retweets) >= 0)) {
+		//		correctMeta = false;
+		//	}
+			
 			//verify that there are hashtags
 			
 			assertTrue(correctMeta);	
 			
 		}
+		
+		
 		
 		//FR28 twitter post content
 		@Test
@@ -125,13 +131,26 @@ public class FRExtra{
 			//text
 			String text = expand.findElement(By.className("content-container")).findElement(By.tagName("p")).getText();
 			//img
-			String imgsrc = expand.findElement(By.className("content-container")).findElement(By.tagName("img")).getAttribute("src");
+			String imgsrc = expand.findElement(By.className("content-container")).findElement(By.tagName("img")).getAttribute("src");	
+			//verified account (tag?)
+		
+			boolean correctContent = true;
+			
+			if (name.equals(null)) {
+				correctContent = false;
+			}
+			if (text.equals(null)) {
+				correctContent = false;
+			}
+			if (imgsrc.equals(null)) {
+				correctContent = false;
+			}
 			//verified account (tag?)
 			
-			//assert that the strings are correct
+			assertTrue(correctContent);
 			
 		}
-			
+	
 	
 	
 	//FR31 Instagram post content
@@ -160,11 +179,24 @@ public class FRExtra{
 		String imgsrc = expand.findElement(By.className("content-container")).findElement(By.tagName("img")).getAttribute("src");
 		//text
 		String text = expand.findElement(By.className("content-container")).findElement(By.tagName("p")).getText();
-		//username
 		//verified account
+		//username
 		
-		//assert that the strings are correct
+		boolean correctContent = true;
 		
+		if (name.equals(null)) {
+			correctContent = false;
+		}
+		if (text.equals(null)) {
+			correctContent = false;
+		}
+		if (imgsrc.equals(null)) {
+			correctContent = false;
+		}
+		//username
+		//verified account (tag?)
+		
+		assertTrue(correctContent);		
 	}
 	
 	
@@ -201,9 +233,9 @@ public class FRExtra{
 				likes = data.getText();
 			} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("calendar-alt")) {
 				date = data.getText();
-			} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("comments")) {
-				comments = data.getText();
-			}
+			} //else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("comments")) {
+		//		comments = data.getText();
+		//	} 
 		}
 		
 		boolean correctMeta = true;
@@ -212,19 +244,23 @@ public class FRExtra{
 		if (!(Integer.parseInt(likes) >= 0)) {
 			correctMeta = false;
 		}
-		//comments
-		if (!(Integer.parseInt(comments) >= 0)) {
-			correctMeta = false;
-		}
 		//date
-		if (!(date != null)) {
+		if (date == null) {
 			correctMeta = false;
 		}
-		//verify that there are hashtags
+		
+	//comments
+	//	if (!(Integer.parseInt(comments) >= 0)) {
+	//		correctMeta = false;
+	//	}
+	//verify that there are hashtags
+		
 		
 		assertTrue(correctMeta);
 		
 	}
+	
+	
 	
 }
 
