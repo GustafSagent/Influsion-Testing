@@ -207,7 +207,7 @@ public class FR1to11{
 		browser.get("http://localhost:8080/login");
 		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys("TestUser" + uniqueUserID);
 		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys("TestPassword");
-		Thread.sleep(10000);
+		Thread.sleep(1000);
 		browser.findElement(By.xpath("//button[contains(text(),'Lets go into the wilderness!')]")).click();
 		
 		Thread.sleep(1000);
@@ -218,6 +218,31 @@ public class FR1to11{
 		
 		
 	}
+	
+	
+	@Test
+	public void FR9() throws InterruptedException {
+		
+		browser.get("http://localhost:8080/login");
+		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys("test");
+		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys("testtest");
+		Thread.sleep(1000);
+		browser.findElement(By.xpath("//button[contains(text(),'Lets go into the wilderness!')]")).click();
+		Thread.sleep(1000);
+		
+		List<WebElement> PopularFeed = browser.findElements(By.cssSelector(".popular-feed-content"));
+		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
+		assertEquals(PopularComponent.size(),100);  
+		assertEquals(PopularFeed.size(), 1);
+				
+	}
+	
+	
+
+	
+	
+	
+	
 
 
 
