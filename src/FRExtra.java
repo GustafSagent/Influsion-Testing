@@ -35,6 +35,104 @@ public class FRExtra{
 	
 	// ------------------LETS GO--------------------------
 	
+	//FR27 Twitter meta content
+		@Test
+		public void FR27() throws InterruptedException {
+			
+			List<WebElement> filterButtons = browser.findElement(By.className("filter")).findElements(By.tagName("svg"));
+			for (WebElement filterButton : filterButtons) {
+				if (filterButton.getAttribute("data-icon").equals("instagram") ||
+					filterButton.getAttribute("data-icon").equals("youtube")) {
+					if (filterButton.getAttribute("data-state").equals("active")) {
+						filterButton.click();
+					}
+				}
+			}
+			
+			List<WebElement> instaContent = browser.findElements(By.className("popular-component-wrapper"));
+			instaContent.get(0).click();
+			Thread.sleep(500);
+			
+			WebElement metaData = instaContent.get(0).findElement(By.className("meta-data"));
+			List<WebElement> metaDataTypes = metaData.findElements(By.tagName("span"));
+			 
+			String likes = "";
+			String date = "";
+			String retweets = "";
+			String comments = "";
+			String hashtags = "";
+			
+			//where will the hashtags be shown?
+			
+			for (WebElement data : metaDataTypes) {
+				if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("heart")) {
+					likes = data.getText();
+				} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("calendar-alt")) {
+					date = data.getText();
+				} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("retweet")) {
+					retweets = data.getText();
+				} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("comments")) {
+					comments = data.getText();
+				}
+			}
+			
+			boolean correctMeta = true;
+			
+			//likes
+			if (!(Integer.parseInt(likes) >= 0)) {
+				correctMeta = false;
+			}
+			//comments
+			if (!(Integer.parseInt(comments) >= 0)) {
+				correctMeta = false;
+			}
+			//retweets
+			if (!(Integer.parseInt(retweets) >= 0)) {
+				correctMeta = false;
+			}
+			//date
+			if (!(date != null)) {
+				correctMeta = false;
+			}
+			//verify that there are hashtags
+			
+			assertTrue(correctMeta);	
+			
+		}
+		
+		//FR28 twitter post content
+		@Test
+		public void FR28() throws InterruptedException {
+			
+			List<WebElement> filterButtons = browser.findElement(By.className("filter")).findElements(By.tagName("svg"));
+			for (WebElement filterButton : filterButtons) {
+				if (filterButton.getAttribute("data-icon").equals("instagram") ||
+					filterButton.getAttribute("data-icon").equals("youtube")) {
+					if (filterButton.getAttribute("data-state").equals("active")) {
+						filterButton.click();
+					}
+				}
+			}
+			
+			List<WebElement> instaContent = browser.findElements(By.className("popular-component-wrapper"));
+			instaContent.get(0).click();
+			Thread.sleep(500);
+			
+			WebElement expand = instaContent.get(0).findElement(By.className("expanded-view"));
+			
+			//name
+			String name = expand.findElement(By.xpath(".//div[@class='header']/a[1]")).getAttribute("href");
+			//text
+			String text = expand.findElement(By.className("content-container")).findElement(By.tagName("p")).getText();
+			//img
+			String imgsrc = expand.findElement(By.className("content-container")).findElement(By.tagName("img")).getAttribute("src");
+			//verified account (tag?)
+			
+			//assert that the strings are correct
+			
+		}
+			
+	
 	
 	//FR31 Instagram post content
 	@Test
@@ -69,10 +167,10 @@ public class FRExtra{
 		
 	}
 	
-	/*
+	
 	//FR32 Instagram meta content
 	@Test
-	public void FR32() throws InterruptedException {
+	public void FR32() throws InterruptedException {	
 		
 		List<WebElement> filterButtons = browser.findElement(By.className("filter")).findElements(By.tagName("svg"));
 		for (WebElement filterButton : filterButtons) {
@@ -90,23 +188,43 @@ public class FRExtra{
 		
 		WebElement metaData = instaContent.get(0).findElement(By.className("meta-data"));
 		List<WebElement> metaDataTypes = metaData.findElements(By.tagName("span"));
-		ArrayList<String> metaDataStrings = new ArrayList<String>();
+		 
+		String likes = "";
+		String date = "";
+		String comments = "";
+		String hashtags = "";
+		
+		//where will the hashtags be shown?
 		
 		for (WebElement data : metaDataTypes) {
-			metaDataStrings.add(data.findElement(By.tagName("svg")).getAttribute("data-icon"));
+			if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("heart")) {
+				likes = data.getText();
+			} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("calendar-alt")) {
+				date = data.getText();
+			} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("comments")) {
+				comments = data.getText();
+			}
 		}
 		
-		ArrayList<String> reqStrings = new ArrayList<String>();
-		reqStrings.add("heart");
-		reqStrings.add("calendar-alt");
-		//reqStrings.add("views");
-		//reqStrings.add("comments");
-		//check for hashtags
+		boolean correctMeta = true;
 		
-		assertTrue(metaDataStrings.containsAll(reqStrings));	
+		//likes
+		if (!(Integer.parseInt(likes) >= 0)) {
+			correctMeta = false;
+		}
+		//comments
+		if (!(Integer.parseInt(comments) >= 0)) {
+			correctMeta = false;
+		}
+		//date
+		if (!(date != null)) {
+			correctMeta = false;
+		}
+		//verify that there are hashtags
 		
-	}*/
-	
+		assertTrue(correctMeta);
+		
+	}
 	
 }
 
