@@ -16,12 +16,13 @@ public class FR23to32{
 
 	//Run this code to setup the right test environmnet 
 	@Before
-	public void setUpTestEnviornment() {
+	public void setUpTestEnviornment() throws InterruptedException {
 		//Hermans config
 		//System.setProperty("webdriver.chrome.driver", "C:/Users/Herma/Desktop/SeleniumDriver/chromedriver.exe");
 		System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe");		
 		browser= new ChromeDriver();
-		browser.get("http://localhost:8080/");   
+		browser.get("http://localhost:8080/"); 
+		Thread.sleep(500);
 	}
 	
 	@After
