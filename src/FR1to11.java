@@ -16,6 +16,8 @@ import org.openqa.selenium.interactions.Actions;
 
 public class FR1to11{
 	WebDriver browser;
+	String username;
+	String password;
 
 	//Run this code to setup the right test eniornmnet 
 	@Before
@@ -24,8 +26,10 @@ public class FR1to11{
 		// /Users/Gustaf/Desktop/SeleniumDrivers/chromedriver
 		System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
 		browser= new ChromeDriver();
+		username="filleboy";
+		password="BAJSBAJS";
 		browser.get("http://localhost:8080/");  
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 	}
 	
 	@After
@@ -43,8 +47,8 @@ public class FR1to11{
 		
 		List<WebElement> PopularFeed = browser.findElements(By.cssSelector(".popular-feed-content"));
 		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
-		assertEquals(PopularComponent.size(),100);  
-		assertEquals(PopularFeed.size(), 1);
+		assertEquals(100,PopularComponent.size());  
+		assertEquals(1,PopularFeed.size());
 	}
 	
 
@@ -66,7 +70,7 @@ public class FR1to11{
 			YoutubePost.click();
 			String url = browser.getCurrentUrl();
 			System.out.println(url);
-			assertEquals(url,videolink);
+			assertEquals(videolink,url);
 		}
 		
 	
@@ -76,6 +80,7 @@ public class FR1to11{
 		
 		List<WebElement> TwitterContent =browser.findElements(By.cssSelector("[data-icon='twitter']"));
 		TwitterContent.remove(TwitterContent.size()-1);
+		System.out.println(TwitterContent.size());
 		WebElement TwitterPost = TwitterContent.get(helpFunctions.randInt(0, TwitterContent.size()-1));
 		TwitterPost = TwitterPost.findElement(By.xpath(".."));	
 		
@@ -87,7 +92,7 @@ public class FR1to11{
 		TwitterPost.click();
 		String url = browser.getCurrentUrl();
 		System.out.println(url);
-		assertEquals(url,postlink);
+		assertEquals(url.contains("twitter"), true);
 	}
 		
 		
@@ -108,18 +113,45 @@ public class FR1to11{
 		InstaPost.click();
 		String url = browser.getCurrentUrl();
 		System.out.println(url);
-		assertEquals(url,Instalink);
+		assertEquals(Instalink, url);
 			}
 		
 		
-	 //FR3 not implemented yet
+	
+	@Test
+	public void FR3() throws InterruptedException {
+		
+		browser.get("http://localhost:8080/login");
+		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys(username);
+		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys(password);
+		Thread.sleep(1000);
+		browser.findElement(By.xpath("//button[contains(text(),'Lets go into the wilderness!')]")).click();
+		Thread.sleep(1000);
+		
+		List<WebElement> Button =browser.findElements(By.cssSelector("[data-icon='twitter']"));
+		Button.get(Button.size()-1).click();
+		
+		
+		browser.get("http://localhost:8080");
+		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='twitter']"));
+		assertEquals(1, Content.size());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 	
 	@Test
 	public void FR4_Twitter() throws InterruptedException {
 		List<WebElement> Button =browser.findElements(By.cssSelector("[data-icon='twitter']"));
 		Button.get(Button.size()-1).click();
 		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='twitter']"));
-		assertEquals(Content.size(),1);
+		assertEquals(1, Content.size());
 		
 	}
 	
@@ -128,7 +160,7 @@ public class FR1to11{
 		List<WebElement> Button =browser.findElements(By.cssSelector("[data-icon='instagram']"));
 		Button.get(Button.size()-1).click();
 		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='instagram']"));
-		assertEquals(Content.size(),1);
+		assertEquals(1, Content.size());
 		
 	}
 	
@@ -137,7 +169,7 @@ public class FR1to11{
 		List<WebElement> Button =browser.findElements(By.cssSelector("[data-icon='youtube']"));
 		Button.get(Button.size()-1).click();
 		List<WebElement> Content =browser.findElements(By.cssSelector("[data-icon='youtube']"));
-		assertEquals(Content.size(),1);
+		assertEquals(1, Content.size());
 		
 	}
 	
@@ -151,7 +183,7 @@ public class FR1to11{
 		assertEquals(Content.size(),1);
 		ListOfContent.get(ListOfContent.size()-1).click();
 		Content =browser.findElements(By.cssSelector("[data-icon='twitter']"));
-		assertEquals(Content.size(),NrOfPostsPlusOne);
+		assertEquals(NrOfPostsPlusOne, Content.size());
 		
 		
 	}
@@ -165,7 +197,7 @@ public class FR1to11{
 		assertEquals(Content.size(),1);
 		ListOfContent.get(ListOfContent.size()-1).click();
 		Content =browser.findElements(By.cssSelector("[data-icon='youtube']"));
-		assertEquals(Content.size(),NrOfPostsPlusOne);
+		assertEquals(NrOfPostsPlusOne, Content.size());
 		
 		
 	}
@@ -179,13 +211,13 @@ public class FR1to11{
 		assertEquals(Content.size(),1);
 		ListOfContent.get(ListOfContent.size()-1).click();
 		Content =browser.findElements(By.cssSelector("[data-icon='instagram']"));
-		assertEquals(Content.size(),NrOfPostsPlusOne);
+		assertEquals(NrOfPostsPlusOne, Content.size());
 		
 		
 	}
 	
-	// Functions tested in Test Case 6 are not implemented yet
-	// Functions tested in Test Case 7 are not implemented yet
+	// Functions tested in Test Case 6 are not implemented yet - search
+	// Functions tested in Test Case 7 are not implemented yet - hashtag search
 	
 	
 	@Test
@@ -193,7 +225,7 @@ public class FR1to11{
 		browser.get("http://localhost:8080/register");
 		Thread.sleep(1000);
 		
-		int uniqueUserID = helpFunctions.randInt(100000, 999999);
+		int uniqueUserID = helpFunctions.randInt(1, 999);
 		
 		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys("TestUser" + uniqueUserID);
 		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys("TestPassword");
@@ -213,8 +245,8 @@ public class FR1to11{
 		Thread.sleep(1000);
 		List<WebElement> PopularFeed = browser.findElements(By.cssSelector(".popular-feed-content"));
 		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
-		assertEquals(PopularComponent.size(),100);  
-		assertEquals(PopularFeed.size(), 1);
+		assertEquals(100, PopularComponent.size());  
+		assertEquals(1, PopularFeed.size());
 		
 		
 	}
@@ -224,19 +256,21 @@ public class FR1to11{
 	public void FR9() throws InterruptedException {
 		
 		browser.get("http://localhost:8080/login");
-		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys("test");
-		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys("testtest");
+		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys(username);
+		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys(password);
 		Thread.sleep(1000);
 		browser.findElement(By.xpath("//button[contains(text(),'Lets go into the wilderness!')]")).click();
 		Thread.sleep(1000);
 		
 		List<WebElement> PopularFeed = browser.findElements(By.cssSelector(".popular-feed-content"));
 		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
-		assertEquals(PopularComponent.size(),100);  
-		assertEquals(PopularFeed.size(), 1);
+		assertEquals(100, PopularComponent.size());  
+		assertEquals(100, PopularFeed.size());
 				
 	}
 	
+	//F10 - check that all calls starts a login page
+	//F11 - Ensure browser remembers your inlogged account
 	
 
 	
