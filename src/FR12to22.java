@@ -18,10 +18,8 @@ public class FR12to22{
 	
 	WebDriver browser;
 
-	//Run this code to setup the right test environment 
 	@Before
 	public void setUpTestEnviornment() throws InterruptedException {
-		// Change webdriver file path to your own manually
 		System.setProperty("webdriver.chrome.driver", "C:/Users/Herma/Desktop/SeleniumDriver/chromedriver.exe");
 		browser= new ChromeDriver();
 		browser.get("http://localhost:8080/");  
@@ -32,6 +30,7 @@ public class FR12to22{
 	public void endTesting() {
 		browser.close();
 	}
+	
 	
 	// ------------------LETS GO--------------------------
 	
@@ -165,7 +164,7 @@ public class FR12to22{
 	//20-21 Delete account functionality
 	
 	
-	//FR22 
+	//FR22 Promote Specific Influencer
 	
 }
 
