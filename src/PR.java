@@ -54,4 +54,37 @@ public class PR {
 	
 
 	}
+	
+	@Test
+	public void PR2() throws InterruptedException {
+		boolean responsecheck=false;
+	
+	
+
+	browser.get("http://localhost:8080/");  
+	Thread.sleep(1000);
+	List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
+	
+	
+	
+	long start = System.currentTimeMillis();
+	
+	PopularComponent.get(0).click();
+	List<WebElement> Component = browser.findElements(By.className("content-container"));
+	
+	
+
+	long finish = System.currentTimeMillis();
+	long responsetime = finish-start;
+	if (responsetime<=2000) {
+		responsecheck=true;
+		
+	}
+
+	assertEquals(true,responsecheck);
+	
+	
+	
+
+	}
 }

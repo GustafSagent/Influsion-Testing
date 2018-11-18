@@ -26,8 +26,8 @@ public class FR1to11{
 		// /Users/Gustaf/Desktop/SeleniumDrivers/chromedriver
 		System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
 		browser= new ChromeDriver();
-		username="filleboy";
-		password="BAJSBAJS";
+		username="test9";
+		password="test9";
 		browser.get("http://localhost:8080/");  
 		Thread.sleep(1500);
 	}
@@ -265,7 +265,7 @@ public class FR1to11{
 		List<WebElement> PopularFeed = browser.findElements(By.cssSelector(".popular-feed-content"));
 		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
 		assertEquals(100, PopularComponent.size());  
-		assertEquals(100, PopularFeed.size());
+		assertEquals(1, PopularFeed.size());
 				
 	}
 	
