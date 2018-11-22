@@ -14,10 +14,9 @@ public class helpFunctions {
 	
 	public static void login(String username, String password, WebDriver browser) throws InterruptedException {
 		
-		
 		browser.findElement(By.cssSelector("[placeholder='Username']")).sendKeys(username);
 		browser.findElement(By.cssSelector("[placeholder='Password']")).sendKeys(password);
-		browser.findElement(By.xpath("//button[contains(text(),'Lets go into the wilderness!')]"));
+		browser.findElement(By.xpath("//button[contains(text(),'Lets go into the wilderness!')]")).click();;
 		Thread.sleep(1000);
 	}
 	

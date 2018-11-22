@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+
 public class FR12to22{
 	
 	WebDriver browser;
@@ -22,8 +24,8 @@ public class FR12to22{
 	public void setUpTestEnviornment() throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver", "C:/Users/Herma/Desktop/SeleniumDriver/chromedriver.exe");
 		browser= new ChromeDriver();
-		browser.get("http://localhost:8080/");  
-		Thread.sleep(500);
+		browser.get("http://localhost:8080/");	
+		Thread.sleep(500);		
 	}
 	
 	@After
@@ -41,6 +43,10 @@ public class FR12to22{
 	//FR13 following functionality
 	@Test
 	public void FR13() throws InterruptedException {
+		
+		helpFunctions.login("test1","test1", browser);
+		browser.get("http://localhost:8080/");	
+		Thread.sleep(500);		
 		
 		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
 		
@@ -78,8 +84,12 @@ public class FR12to22{
 	
 	//FR14 check order of posts
 	@Test
-	public void FR14() throws InterruptedException, ParseException {
+	public void FR14() throws InterruptedException, ParseException, NoSuchElementException {
 	
+		helpFunctions.login("test1","test1", browser);
+		browser.get("http://localhost:8080/");
+		Thread.sleep(500);
+		
 		//go to follow page'
 		browser.get("http://localhost:8080/feed");
 		Thread.sleep(500);
@@ -113,6 +123,10 @@ public class FR12to22{
 	//FR15 unfollow functionality
 	@Test
 	public void FR15() throws InterruptedException {
+		
+		helpFunctions.login("test1","test1", browser);
+		browser.get("http://localhost:8080/");
+		Thread.sleep(500);
 		
 		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
 		
