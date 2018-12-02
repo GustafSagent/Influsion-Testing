@@ -33,9 +33,9 @@ public class FR23to32{
 		chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
 		browser = new ChromeDriver(chromeOptions);
 		
-		username="test";
-		password="testtest1234";
-		browser.get("http://13.93.37.179/login");  
+		username="testing12";
+		password="testing12";
+		browser.get("http://localhost:8080");  
         helpFunctions.login(username, password, browser);
 	}
 
@@ -373,7 +373,7 @@ public class FR23to32{
 
 			
 
-			WebElement expand = youtubeContent.get(0).findElement(By.className("expanded-view"));
+			WebElement expand = browser.findElement(By.className("expanded-view"));
 
 			
 
@@ -388,11 +388,6 @@ public class FR23to32{
 			//text
 
 			String text = expand.findElement(By.className("content-container")).findElement(By.tagName("p")).getText();
-
-			//verified account
-
-			//username
-
 			
 
 			boolean correctContent = true;
@@ -415,19 +410,14 @@ public class FR23to32{
 
 				correctContent = false;
 
-			}
-
-			//username
-
-			//verified account (tag?)
-
-			
+			}	
 
 			assertTrue(correctContent);		
 
 		}
-		//FR30 Youtube meta content-----not implement
 		
+		
+		//FR30 Youtube meta content-----not implement
 			@Test
 				public void FR30() throws InterruptedException {
 				browser.findElement(By.className("fa-star")).click();
@@ -467,7 +457,7 @@ public class FR23to32{
 
 					
 
-					WebElement metaData = youtubeContent.get(0).findElement(By.className("meta-data"));
+					WebElement metaData = browser.findElement(By.className("meta-data"));
 
 					List<WebElement> metaDataTypes = metaData.findElements(By.tagName("span"));
 
@@ -483,27 +473,17 @@ public class FR23to32{
 
 					
 
-					//where will the hashtags be shown?
-
-					
-
 					for (WebElement data : metaDataTypes) {
 
 						if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("heart")) {
 
 							likes = data.getText();
-							//System.out.println(likes);
 
 						} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("calendar-alt")) {
 
 							date = data.getText();
-							//System.out.println(data);
 
-						} //else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("comments")) {
-
-					//		comments = data.getText();
-
-					//	} 
+						}
 
 					}
 
@@ -529,19 +509,6 @@ public class FR23to32{
 
 					}
 
-					
-
-				//comments
-
-				//	if (!(Integer.parseInt(comments) >= 0)) {
-
-				//		correctMeta = false;
-
-				//	}
-
-				//verify that there are hashtags
-
-					
 
 					assertTrue(correctMeta);	
 

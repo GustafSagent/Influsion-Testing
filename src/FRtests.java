@@ -48,43 +48,160 @@ public class FRtests{
 	// ------------------LETS GO--------------------------
 	
 	//FR15 unfollow functionality
-		@Test
-		public void FR15() throws InterruptedException {
+	@Test
+	public void FR15() throws InterruptedException {
 			
-			List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
+		List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
 			
-			//check if follow or not, if not then follow
-			if (PopularComponent.get(0).findElement(By.className("fa-heart")).getAttribute("data-state").equals("active")) {
-				//unfollow
-				PopularComponent.get(0).findElement(By.className("fa-heart")).click();	
-			} else {
-				//already not followed
-			}
-			
-			PopularComponent.get(0).click();
-			Thread.sleep(200);
-			String content[] = PopularComponent.get(0).getText().split("\\r?\\n");
-			String nameKey = content[0];
-			
-			//go to follow page'
-			browser.get("http://localhost:8080/");
-			browser.findElement(By.className("subFooter")).findElement(By.className("fa-heart")).click();
-			Thread.sleep(500);
-
-			//see if there are any posts from this influencer
-			List<WebElement> FeedComponent = browser.findElements(By.className("feed-component-wrapper"));
-			ArrayList<String> names = new ArrayList<String>();
-		
-			for (WebElement comp : FeedComponent) {		
-				String conten[] = comp.getText().split("\\r?\\n");
-				String name = conten[0];
-				names.add(name);	
-			}
-			
-			//check if the unfollowed influencer exist in the feed
-			assertFalse(names.contains(nameKey));
-			
+		//check if follow or not, if not then follow
+		if (PopularComponent.get(0).findElement(By.className("fa-heart")).getAttribute("data-state").equals("active")) {
+			//unfollow
+			PopularComponent.get(0).findElement(By.className("fa-heart")).click();	
+		} else {
+			//already not followed
 		}
+			
+		PopularComponent.get(0).click();
+		Thread.sleep(200);
+		String content[] = PopularComponent.get(0).getText().split("\\r?\\n");
+		String nameKey = content[0];
+			
+		//go to follow page'
+		browser.get("http://localhost:8080/");
+		browser.findElement(By.className("subFooter")).findElement(By.className("fa-heart")).click();
+		Thread.sleep(500);
+
+		//see if there are any posts from this influencer
+		List<WebElement> FeedComponent = browser.findElements(By.className("feed-component-wrapper"));
+		ArrayList<String> names = new ArrayList<String>();
+		
+		for (WebElement comp : FeedComponent) {		
+			String conten[] = comp.getText().split("\\r?\\n");
+			String name = conten[0];
+			names.add(name);	
+		}
+			
+		//check if the unfollowed influencer exist in the feed
+		assertFalse(names.contains(nameKey));
+			
+	}
+		
+	@Test
+	public void FR29() throws InterruptedException {
+
+		browser.findElement(By.className("fa-star")).click();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<WebElement> filterButtons = browser.findElement(By.className("filter")).findElements(By.tagName("svg"));
+
+		for (WebElement filterButton : filterButtons) {
+			if (filterButton.getAttribute("data-icon").equals("twitter") ||
+				filterButton.getAttribute("data-icon").equals("instagram")) {
+				if (filterButton.getAttribute("data-state").equals("active")) {
+					filterButton.click();
+				}
+			}
+		}
+		
+		List<WebElement> youtubeContent = browser.findElements(By.className("popular-component-wrapper"));
+		youtubeContent.get(0).click();
+		Thread.sleep(200);
+
+		WebElement expand = browser.findElement(By.className("expanded-view"));
+
+		//name
+		String name = expand.findElement(By.xpath(".//div[@class='header']/a[1]")).getAttribute("href");
+
+		//video
+		String videosrc = expand.findElement(By.className("content-container")).findElement(By.tagName("iframe")).getAttribute("src");
+
+		//text
+		String text = expand.findElement(By.className("content-container")).findElement(By.tagName("p")).getText();
+			
+		boolean correctContent = true;
+		
+		if (name.equals(null)) {
+			correctContent = false;
+		}
+
+		if (text.equals(null)) {
+			correctContent = false;
+		}
+
+		if (videosrc.equals(null)) {
+			correctContent = false;
+		}	
+
+			assertTrue(correctContent);		
+		}
+		
+		
+		//FR30 Youtube meta content-----not implement
+		@Test
+			public void FR30() throws InterruptedException {
+			browser.findElement(By.className("fa-star")).click();
+
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			List<WebElement> filterButtons = browser.findElement(By.className("filter")).findElements(By.tagName("svg"));
+
+			for (WebElement filterButton : filterButtons) {
+
+				if (filterButton.getAttribute("data-icon").equals("twitter") ||
+					filterButton.getAttribute("data-icon").equals("instagram")) {
+					if (filterButton.getAttribute("data-state").equals("active")) {
+						filterButton.click();
+					}
+				}
+			}
+
+			List<WebElement> youtubeContent = browser.findElements(By.className("popular-component-wrapper"));
+			youtubeContent.get(0).click();
+			Thread.sleep(300);
+
+			WebElement metaData = browser.findElement(By.className("meta-data"));
+			List<WebElement> metaDataTypes = metaData.findElements(By.tagName("span"));
+
+			String likes = "";
+
+			String date = "";
+
+			String comments = "";
+
+			String hashtags = "";
+
+			for (WebElement data : metaDataTypes) {
+
+				if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("heart")) {
+					likes = data.getText();
+				} else if (data.findElement(By.tagName("svg")).getAttribute("data-icon").equals("calendar-alt")) {
+					date = data.getText();
+				}
+			}
+			
+			boolean correctMeta = true;
+
+			//likes
+			if (!(Integer.parseInt(likes) >= 0)) {
+				correctMeta = false;
+			}
+
+			//date
+			if (date == null) {
+				correctMeta = false;
+			}
+			
+			assertTrue(correctMeta);
+		}	
 
 	//FR37 Admin login
 	@Test
