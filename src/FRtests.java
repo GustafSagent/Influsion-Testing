@@ -47,6 +47,44 @@ public class FRtests{
 	
 	// ------------------LETS GO--------------------------
 	
+	//FR15 unfollow functionality
+		@Test
+		public void FR15() throws InterruptedException {
+			
+			List<WebElement> PopularComponent = browser.findElements(By.className("popular-component-wrapper"));
+			
+			//check if follow or not, if not then follow
+			if (PopularComponent.get(0).findElement(By.className("fa-heart")).getAttribute("data-state").equals("active")) {
+				//unfollow
+				PopularComponent.get(0).findElement(By.className("fa-heart")).click();	
+			} else {
+				//already not followed
+			}
+			
+			PopularComponent.get(0).click();
+			Thread.sleep(200);
+			String content[] = PopularComponent.get(0).getText().split("\\r?\\n");
+			String nameKey = content[0];
+			
+			//go to follow page'
+			browser.get("http://localhost:8080/");
+			browser.findElement(By.className("subFooter")).findElement(By.className("fa-heart")).click();
+			Thread.sleep(500);
+
+			//see if there are any posts from this influencer
+			List<WebElement> FeedComponent = browser.findElements(By.className("feed-component-wrapper"));
+			ArrayList<String> names = new ArrayList<String>();
+		
+			for (WebElement comp : FeedComponent) {		
+				String conten[] = comp.getText().split("\\r?\\n");
+				String name = conten[0];
+				names.add(name);	
+			}
+			
+			//check if the unfollowed influencer exist in the feed
+			assertFalse(names.contains(nameKey));
+			
+		}
 
 	//FR37 Admin login
 	@Test

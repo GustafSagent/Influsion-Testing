@@ -33,8 +33,8 @@ public class FR12to22{
 		chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
 		browser = new ChromeDriver(chromeOptions);
 		
-		browser.get("http://13.93.37.179/");
-		login("test1","test1", browser);
+		browser.get("http://localhost:8080/");
+		login("testing12","testing12", browser);
 
 		Thread.sleep(500);		
 	}
@@ -143,7 +143,7 @@ public class FR12to22{
 		String nameKey = content[0];
 		
 		//go to follow page'
-		browser.findElement(By.className("blur-overlay")).click();
+		browser.get("http://localhost:8080/");
 		browser.findElement(By.className("subFooter")).findElement(By.className("fa-heart")).click();
 		Thread.sleep(500);
 
