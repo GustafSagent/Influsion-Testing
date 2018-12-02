@@ -34,7 +34,7 @@ public class FR23to32{
 		browser = new ChromeDriver(chromeOptions);
 		
 		username="test";
-		password="test1234";
+		password="testtest1234";
 		browser.get("http://13.93.37.179/login");  
         helpFunctions.login(username, password, browser);
 	}

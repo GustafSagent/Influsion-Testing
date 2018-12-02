@@ -27,14 +27,15 @@ public class FR1to11{
 	public void setUpTestEnviornment() throws InterruptedException {
 		// /Users/Gustaf/Desktop/SeleniumDrivers/chromedriver
 		//Server: chromedriver
-		System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
-		
+		//System.setProperty("webdriver.chrome.driver", "/Users/Gustaf/Desktop/SeleniumDrivers/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "C:/Users/Herma/Desktop/SeleniumDriver/chromedriver.exe");
+
 		ChromeOptions options = new ChromeOptions();  
 //		options.addArguments("--headless");  
 		browser = new ChromeDriver(options);
 		username="jonas";
 		password="1234";
-		startUrl = "http://localhost:8080/";
+		startUrl = "http://13.93.37.179/";
 		browser.get(startUrl);
 		Thread.sleep(1000);
 	}
